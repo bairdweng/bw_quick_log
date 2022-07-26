@@ -1,0 +1,112 @@
+{
+	"name": "bw-quick-log",
+	"displayName": "bw_quick_log",
+	"description": "快速查找日志",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.69.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:bw-quick-log.includeLinesWithRegex",
+		"onCommand:bw-quick-log.includeLinesWithString",
+		"onCommand:bw-quick-log.excludeLinesWithRegex",
+		"onCommand:bw-quick-log.excludeLinesWithString",
+		"onCommand:bw-quick-log.includeLinesWithRegexAndContext",
+		"onCommand:bw-quick-log.includeLinesWithStringAndContext",
+		"onCommand:bw-quick-log.excludeLinesWithRegexAndContext",
+		"onCommand:bw-quick-log.excludeLinesWithStringAndContext",
+		"onCommand:bw-quick-log.promptFilterLines",
+		"onCommand:bw-quick-log.filterLines"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"title": "quick-log:包含关键字的所有行",
+				"command": "bw-quick-log.includeLinesWithString"
+			},
+			{
+				"title": "quick-log: 包含关键字的所有行(上下文)",
+				"command": "bw-quick-log.includeLinesWithStringAndContext"
+			},
+			{
+				"title": "quick-log: 不包含关键字的所有行",
+				"command": "bw-quick-log.excludeLinesWithString"
+			},
+			{
+				"title": "quick-log: 不包含关键字的所有行(上下文)",
+				"command": "bw-quick-log.excludeLinesWithStringAndContext"
+			}
+		],
+		"configuration": {
+			"title": "quick-log",
+			"properties": {
+				"filterlines.caseSensitiveStringSearch": {
+					"type": "boolean",
+					"default": false,
+					"description": "If true, string searches are case-sensitive"
+				},
+				"filterlines.caseSensitiveRegexSearch": {
+					"type": "boolean",
+					"default": true,
+					"description": "If true, regex searches are case-sensitive"
+				},
+				"filterlines.preserveSearch": {
+					"type": "boolean",
+					"default": true,
+					"description": "If true, your latest search string or regex will be saved, and then restored for your next search. If false, the search string or regex will be blank"
+				},
+				"filterlines.lineNumbers": {
+					"type": "boolean",
+					"default": false,
+					"description": "Show source file line numbers in results"
+				},
+				"filterlines.createNewTab": {
+					"type": "boolean",
+					"default": true,
+					"description": "Create new tab for filter results"
+				},
+				"filterlines.indentContext": {
+					"type": "boolean",
+					"default": true,
+					"description": "Indent context lines"
+				},
+				"filterlines.foldIndentedContext": {
+					"type": "boolean",
+					"default": true,
+					"description": "Fold indented context lines"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.69.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "16.x",
+		"@typescript-eslint/eslint-plugin": "^5.30.0",
+		"@typescript-eslint/parser": "^5.30.0",
+		"eslint": "^8.18.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.0.0",
+		"typescript": "^4.7.4",
+		"ts-loader": "^9.3.1",
+		"webpack": "^5.73.0",
+		"webpack-cli": "^4.10.0",
+		"@vscode/test-electron": "^2.1.5"
+	}
+}
