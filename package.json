@@ -41,6 +41,15 @@
 				"command": "bw-quick-log.excludeLinesWithStringAndContext"
 			}
 		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorFocus",
+					"command": "bw-quick-log.includeLinesWithString",
+					"group": "navigation"
+				}
+			]
+		},
 		"configuration": {
 			"title": "quick-log",
 			"properties": {
