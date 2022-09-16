@@ -19,7 +19,8 @@
 		"onCommand:bw-quick-log.excludeLinesWithRegexAndContext",
 		"onCommand:bw-quick-log.excludeLinesWithStringAndContext",
 		"onCommand:bw-quick-log.promptFilterLines",
-		"onCommand:bw-quick-log.filterLines"
+		"onCommand:bw-quick-log.filterLines",
+		"onCommand:bw-quick-log.saveTheCurrentLog"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -39,13 +40,17 @@
 			{
 				"title": "quick-log: 不包含关键字的所有行(上下文)",
 				"command": "bw-quick-log.excludeLinesWithStringAndContext"
+			},
+			{
+				"title": "quick-log: 保存选中的日志到bw_quick_temple",
+				"command": "bw-quick-log.saveTheCurrentLog"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
 					"when": "editorFocus",
-					"command": "bw-quick-log.includeLinesWithString",
+					"command": "bw-quick-log.saveTheCurrentLog",
 					"group": "navigation"
 				}
 			]

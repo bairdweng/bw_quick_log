@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import { escapeRegexp, catchErrors } from './utils';
 import { IDependencyRegistry, ExtensionSettings, DependencyRegistry } from './di';
 import { IConfiguration } from './configuration';
-
+import * as fs from 'fs';
 
 type SearchType = 'string' | 'regex';
 
@@ -92,6 +92,11 @@ export function activate(context: vscode.ExtensionContext) {
 			const registry = DI.getRegistry(extensionContext);
 			filterLines(registry, editor, edit, needle, search_type, invert_search, context, before_context, after_context);
 		})),
+
+		vscode.commands.registerTextEditorCommand('bw-quick-log.saveTheCurrentLog', catchErrors((editor, edit, args) => {
+			saveCurrentLog();
+		})),
+
 	);
 
 }
@@ -342,8 +347,52 @@ function fold() {
 	setTimeout(() => vscode.commands.executeCommand('editor.foldAll'), 100);
 }
 
+// 保存当前选中的日志
+async function saveCurrentLog() {
+	// 获取选中的文本
+	const editor = vscode.window.activeTextEditor
+	if (!editor) return;
+	const Ranges = editor.selections
+	const texts: string[] = [];
+	Ranges.forEach((range) => {
+		const text = editor.document.getText(range)
+		texts.push(text)
+	})
+	const vsCodeE = new vscode.WorkspaceEdit()
+	if (!vscode.workspace.workspaceFolders) {
+		vscode.window.showErrorMessage("工作区不存在");
+		return
+	}
 
+	// 创建临时文件
+	const root = vscode.workspace.workspaceFolders[0].uri.fsPath;
+	const wEdit = new vscode.WorkspaceEdit();
+	const filePath = vscode.Uri.file(root + '/bw_quick_temple.log');
+	if (!fs.existsSync(filePath.fsPath)) {
+		wEdit.createFile(filePath);
+		await vscode.workspace.applyEdit(wEdit)
+		console.log('文件创建成功');
+	}
+	else {
+		console.log('文件已存在');
+	}
+	const contentTxt = texts.join('\n');
 
+	const document = editor.document;
+	const cursorPos = editor.selection.active;
+	const endPos = document.lineAt(cursorPos).range.end;
+	wEdit.insert(filePath, endPos, contentTxt)
+	// 日志保存
+	let success = await vscode.workspace.applyEdit(wEdit);
+	if (success) {
+		console.log('日志写入成功');
+		vscode.window.showInformationMessage('保存成功');
+	}
+	else {
+		console.log('日志写入失败');
+		vscode.window.showErrorMessage("保存成功");
+	}
+}
 
 
 
