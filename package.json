@@ -20,7 +20,8 @@
 		"onCommand:bw-quick-log.excludeLinesWithStringAndContext",
 		"onCommand:bw-quick-log.promptFilterLines",
 		"onCommand:bw-quick-log.filterLines",
-		"onCommand:bw-quick-log.saveTheCurrentLog"
+		"onCommand:bw-quick-log.saveTheCurrentLog",
+		"onCommand:bw-quick-log.decodeLog"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -30,20 +31,24 @@
 				"command": "bw-quick-log.includeLinesWithString"
 			},
 			{
-				"title": "quick-log: 包含关键字的所有行(上下文)",
+				"title": "quick-log:包含关键字的所有行(上下文)",
 				"command": "bw-quick-log.includeLinesWithStringAndContext"
 			},
 			{
-				"title": "quick-log: 不包含关键字的所有行",
+				"title": "quick-log:不包含关键字的所有行",
 				"command": "bw-quick-log.excludeLinesWithString"
 			},
 			{
-				"title": "quick-log: 不包含关键字的所有行(上下文)",
+				"title": "quick-log:不包含关键字的所有行(上下文)",
 				"command": "bw-quick-log.excludeLinesWithStringAndContext"
 			},
 			{
-				"title": "quick-log: 保存选中的日志到bw_quick_temple",
+				"title": "quick-log:保存选中的日志到bw_quick_temple",
 				"command": "bw-quick-log.saveTheCurrentLog"
+			},
+			{
+				"title": "quick-log:日志解密",
+				"command": "bw-quick-log.decodeLog"
 			}
 		],
 		"menus": {
@@ -58,37 +63,37 @@
 		"configuration": {
 			"title": "quick-log",
 			"properties": {
-				"filterlines.caseSensitiveStringSearch": {
+				"bwQuickLog.caseSensitiveStringSearch": {
 					"type": "boolean",
 					"default": false,
 					"description": "If true, string searches are case-sensitive"
 				},
-				"filterlines.caseSensitiveRegexSearch": {
+				"bwQuickLog.caseSensitiveRegexSearch": {
 					"type": "boolean",
 					"default": true,
 					"description": "If true, regex searches are case-sensitive"
 				},
-				"filterlines.preserveSearch": {
+				"bwQuickLog.preserveSearch": {
 					"type": "boolean",
 					"default": true,
 					"description": "If true, your latest search string or regex will be saved, and then restored for your next search. If false, the search string or regex will be blank"
 				},
-				"filterlines.lineNumbers": {
+				"bwQuickLog.lineNumbers": {
 					"type": "boolean",
 					"default": false,
 					"description": "Show source file line numbers in results"
 				},
-				"filterlines.createNewTab": {
+				"bwQuickLog.createNewTab": {
 					"type": "boolean",
 					"default": true,
 					"description": "Create new tab for filter results"
 				},
-				"filterlines.indentContext": {
+				"bwQuickLog.indentContext": {
 					"type": "boolean",
 					"default": true,
 					"description": "Indent context lines"
 				},
-				"filterlines.foldIndentedContext": {
+				"bwQuickLog.foldIndentedContext": {
 					"type": "boolean",
 					"default": true,
 					"description": "Fold indented context lines"

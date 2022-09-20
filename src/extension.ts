@@ -5,6 +5,7 @@ import { escapeRegexp, catchErrors } from './utils';
 import { IDependencyRegistry, ExtensionSettings, DependencyRegistry } from './di';
 import { IConfiguration } from './configuration';
 import * as fs from 'fs';
+import * as cp from "child_process";
 
 type SearchType = 'string' | 'regex';
 
@@ -42,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "bw-quick-log" is now active!');
 
 	const extensionContext = context;
-
 
 	extensionContext.subscriptions.push(
 
@@ -95,6 +95,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 		vscode.commands.registerTextEditorCommand('bw-quick-log.saveTheCurrentLog', catchErrors((editor, edit, args) => {
 			saveCurrentLog();
+		})),
+
+		vscode.commands.registerTextEditorCommand('bw-quick-log.decodeLog', catchErrors((editor, edit, args) => {
+			decodeLog(extensionContext);
 		})),
 
 	);
@@ -358,14 +362,8 @@ async function saveCurrentLog() {
 		const text = editor.document.getText(range)
 		texts.push(text)
 	})
-	const vsCodeE = new vscode.WorkspaceEdit()
-	if (!vscode.workspace.workspaceFolders) {
-		vscode.window.showErrorMessage("工作区不存在");
-		return
-	}
-
 	// 创建临时文件
-	const root = vscode.workspace.workspaceFolders[0].uri.fsPath;
+	const root = getWorkspaceRootPath();
 	const wEdit = new vscode.WorkspaceEdit();
 	const filePath = vscode.Uri.file(root + '/bw_quick_temple.log');
 	if (!fs.existsSync(filePath.fsPath)) {
@@ -390,12 +388,54 @@ async function saveCurrentLog() {
 	}
 	else {
 		console.log('日志写入失败');
-		vscode.window.showErrorMessage("保存成功");
+		vscode.window.showErrorMessage("日志写入失败");
 	}
 }
 
+function getWorkspaceRootPath() {
+	const vsCodeE = new vscode.WorkspaceEdit()
+	if (!vscode.workspace.workspaceFolders) {
+		vscode.window.showErrorMessage("工作区不存在");
+		return ""
+	}
+	const root = vscode.workspace.workspaceFolders[0].uri.fsPath;
+	return root;
+}
 
+async function decodeLog(context: vscode.ExtensionContext) {
+	const root = getWorkspaceRootPath();
+	const commandStr = 'python ' + context.extensionPath + '/src/decode_mars_nocrypt_log_file.py ' + root;
+	cp.exec(commandStr, (err, out) => {
+		if (err) {
+			console.log('日志异常啦～～～' + err);
+			vscode.window.showErrorMessage('日志解密异常' + err);
+			return
+		}
+		console.log('~~~outoutout' + out)
+		vscode.window.showInformationMessage('日志已成功解密');
+		deleteXLog();
+	});
+}
 
+function deleteXLog() {
+	const vsCodeE = new vscode.WorkspaceEdit()
+	if (!vscode.workspace.workspaceFolders) {
+		vscode.window.showErrorMessage("工作区不存在");
+		return ""
+	}
+	// 删除xlog
+	vscode.workspace.findFiles('**/*.xlog').then(files => {
+		files.forEach(file => {
+			removeFilePath(file);
+		})
+	});
+}
+
+async function removeFilePath(path: vscode.Uri) {
+	const vsCodeE = new vscode.WorkspaceEdit()
+	vsCodeE.deleteFile(path)
+	await vscode.workspace.applyEdit(vsCodeE);
+}
 
 
 // this method is called when your extension is deactivated
