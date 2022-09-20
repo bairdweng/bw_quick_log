@@ -40,35 +40,35 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "bw-quick-log" is now active!');
+	console.log('Congratulations, your extension "my-log" is now active!');
 
 	const extensionContext = context;
 
 	extensionContext.subscriptions.push(
 
 		// 绑定命令
-		vscode.commands.registerTextEditorCommand('bw-quick-log.includeLinesWithString', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.includeLinesWithString', catchErrors((editor, edit, args) => {
 			const args_: PromptFilterLinesArgs = { search_type: 'string', invert_search: false };
-			vscode.commands.executeCommand('bw-quick-log.promptFilterLines', args_);
+			vscode.commands.executeCommand('my-log.promptFilterLines', args_);
 		})),
 
-		vscode.commands.registerTextEditorCommand('bw-quick-log.excludeLinesWithString', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.excludeLinesWithString', catchErrors((editor, edit, args) => {
 			const args_: PromptFilterLinesArgs = { search_type: 'string', invert_search: true };
-			vscode.commands.executeCommand('bw-quick-log.promptFilterLines', args_);
+			vscode.commands.executeCommand('my-log.promptFilterLines', args_);
 		})),
 
-		vscode.commands.registerTextEditorCommand('bw-quick-log.includeLinesWithStringAndContext', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.includeLinesWithStringAndContext', catchErrors((editor, edit, args) => {
 			const args_: PromptFilterLinesArgs = { search_type: 'string', invert_search: false, with_context: true };
-			vscode.commands.executeCommand('bw-quick-log.promptFilterLines', args_);
+			vscode.commands.executeCommand('my-log.promptFilterLines', args_);
 		})),
 
-		vscode.commands.registerTextEditorCommand('bw-quick-log.excludeLinesWithStringAndContext', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.excludeLinesWithStringAndContext', catchErrors((editor, edit, args) => {
 			const args_: PromptFilterLinesArgs = { search_type: 'string', invert_search: true, with_context: true };
-			vscode.commands.executeCommand('bw-quick-log.promptFilterLines', args_);
+			vscode.commands.executeCommand('my-log.promptFilterLines', args_);
 		})),
 
 
-		vscode.commands.registerTextEditorCommand('bw-quick-log.promptFilterLines', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.promptFilterLines', catchErrors((editor, edit, args) => {
 			const {
 				search_type = 'regex',
 				invert_search = false,
@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const registry = DI.getRegistry(extensionContext);
 			promptFilterLines(registry, editor, edit, search_type, invert_search, with_context, context, before_context, after_context).then();
 		})),
-		vscode.commands.registerTextEditorCommand('bw-quick-log.filterLines', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.filterLines', catchErrors((editor, edit, args) => {
 			const {
 				search_type = 'regex',
 				invert_search = false,
@@ -93,11 +93,11 @@ export function activate(context: vscode.ExtensionContext) {
 			filterLines(registry, editor, edit, needle, search_type, invert_search, context, before_context, after_context);
 		})),
 
-		vscode.commands.registerTextEditorCommand('bw-quick-log.saveTheCurrentLog', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.saveTheCurrentLog', catchErrors((editor, edit, args) => {
 			saveCurrentLog();
 		})),
 
-		vscode.commands.registerTextEditorCommand('bw-quick-log.decodeLog', catchErrors((editor, edit, args) => {
+		vscode.commands.registerTextEditorCommand('my-log.decodeLog', catchErrors((editor, edit, args) => {
 			decodeLog(extensionContext);
 		})),
 
@@ -151,7 +151,7 @@ async function promptFilterLines(
 		before_context: beforeContext,
 		after_context: afterContext,
 	};
-	vscode.commands.executeCommand('bw-quick-log.filterLines', args);
+	vscode.commands.executeCommand('my-log.filterLines', args);
 }
 
 function promptForSearchText(registry: IDependencyRegistry, editor: vscode.TextEditor, searchType: SearchType, invertSearch: boolean): Thenable<string | undefined> {

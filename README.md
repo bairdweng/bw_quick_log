@@ -1,6 +1,6 @@
-# bw-quick-log README
+# my-log README
 
-This is the README for your extension "bw-quick-log". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "my-log". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

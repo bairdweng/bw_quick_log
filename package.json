@@ -1,5 +1,5 @@
 {
-	"name": "bw-quick-log",
+	"name": "my-log",
 	"displayName": "bw_quick_log",
 	"description": "快速查找日志",
 	"version": "0.0.1",
@@ -10,58 +10,58 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:bw-quick-log.includeLinesWithRegex",
-		"onCommand:bw-quick-log.includeLinesWithString",
-		"onCommand:bw-quick-log.excludeLinesWithRegex",
-		"onCommand:bw-quick-log.excludeLinesWithString",
-		"onCommand:bw-quick-log.includeLinesWithRegexAndContext",
-		"onCommand:bw-quick-log.includeLinesWithStringAndContext",
-		"onCommand:bw-quick-log.excludeLinesWithRegexAndContext",
-		"onCommand:bw-quick-log.excludeLinesWithStringAndContext",
-		"onCommand:bw-quick-log.promptFilterLines",
-		"onCommand:bw-quick-log.filterLines",
-		"onCommand:bw-quick-log.saveTheCurrentLog",
-		"onCommand:bw-quick-log.decodeLog"
+		"onCommand:my-log.includeLinesWithRegex",
+		"onCommand:my-log.includeLinesWithString",
+		"onCommand:my-log.excludeLinesWithRegex",
+		"onCommand:my-log.excludeLinesWithString",
+		"onCommand:my-log.includeLinesWithRegexAndContext",
+		"onCommand:my-log.includeLinesWithStringAndContext",
+		"onCommand:my-log.excludeLinesWithRegexAndContext",
+		"onCommand:my-log.excludeLinesWithStringAndContext",
+		"onCommand:my-log.promptFilterLines",
+		"onCommand:my-log.filterLines",
+		"onCommand:my-log.saveTheCurrentLog",
+		"onCommand:my-log.decodeLog"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"title": "quick-log:包含关键字的所有行",
-				"command": "bw-quick-log.includeLinesWithString"
+				"title": "my-log:包含关键字的所有行",
+				"command": "my-log.includeLinesWithString"
 			},
 			{
-				"title": "quick-log:包含关键字的所有行(上下文)",
-				"command": "bw-quick-log.includeLinesWithStringAndContext"
+				"title": "my-log:包含关键字的所有行(上下文)",
+				"command": "my-log.includeLinesWithStringAndContext"
 			},
 			{
-				"title": "quick-log:不包含关键字的所有行",
-				"command": "bw-quick-log.excludeLinesWithString"
+				"title": "my-log:不包含关键字的所有行",
+				"command": "my-log.excludeLinesWithString"
 			},
 			{
-				"title": "quick-log:不包含关键字的所有行(上下文)",
-				"command": "bw-quick-log.excludeLinesWithStringAndContext"
+				"title": "my-log:不包含关键字的所有行(上下文)",
+				"command": "my-log.excludeLinesWithStringAndContext"
 			},
 			{
-				"title": "quick-log:保存选中的日志到bw_quick_temple",
-				"command": "bw-quick-log.saveTheCurrentLog"
+				"title": "my-log:保存选中的日志到bw_quick_temple",
+				"command": "my-log.saveTheCurrentLog"
 			},
 			{
-				"title": "quick-log:日志解密",
-				"command": "bw-quick-log.decodeLog"
+				"title": "my-log:日志解密",
+				"command": "my-log.decodeLog"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
 					"when": "editorFocus",
-					"command": "bw-quick-log.saveTheCurrentLog",
+					"command": "my-log.saveTheCurrentLog",
 					"group": "navigation"
 				}
 			]
 		},
 		"configuration": {
-			"title": "quick-log",
+			"title": "my-log",
 			"properties": {
 				"bwQuickLog.caseSensitiveStringSearch": {
 					"type": "boolean",
