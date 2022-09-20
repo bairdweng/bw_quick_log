@@ -404,7 +404,7 @@ function getWorkspaceRootPath() {
 
 async function decodeLog(context: vscode.ExtensionContext) {
 	const root = getWorkspaceRootPath();
-	const commandStr = 'python ' + context.extensionPath + '/src/decode_mars_nocrypt_log_file.py ' + root;
+	const commandStr = 'python ' + context.extensionPath + '/dist/decode_mars_nocrypt_log_file.py ' + root;
 	cp.exec(commandStr, (err, out) => {
 		if (err) {
 			console.log('日志异常啦～～～' + err);

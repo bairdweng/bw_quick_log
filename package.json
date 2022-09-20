@@ -1,8 +1,9 @@
 {
 	"name": "my-log",
-	"displayName": "bw_quick_log",
+	"displayName": "my-log",
 	"description": "快速查找日志",
-	"version": "0.0.1",
+	"version": "0.0.2",
+	"publisher": "bairdweng",
 	"engines": {
 		"vscode": "^1.69.0"
 	},
